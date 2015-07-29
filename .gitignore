@@ -26,3 +26,19 @@
 *.exe
 *.out
 *.app
+
+#vs 
+*.sdf
+*.opensdf
+*.suo
+*.user
+
+# Ŀ¼
+src/ipch
+exe/
+obj/
+Debug/
+Release
+
+# vi/vim .swp file
+*.swp

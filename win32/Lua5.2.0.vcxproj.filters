@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\third\lua-5.2.0\src\lundump.h" />
+    <ClInclude Include="..\third\lua-5.2.0\src\lvm.h" />
+    <ClInclude Include="..\third\lua-5.2.0\src\lzio.h" />
+    <ClInclude Include="..\third\lua-5.2.0\src\lapi.h" />
+    <ClInclude Include="..\third\lua-5.2.0\src\lauxlib.h" />
+    <ClInclude Include="..\third\lua-5.2.0\src\lcode.h" />
+    <ClInclude Include="..\third\lua-5.2.0\src\lctype.h" />
+    <ClInclude Include="..\third\lua-5.2.0\src\ldebug.h" />
+    <ClInclude Include="..\third\lua-5.2.0\src\ldo.h" />
+    <ClInclude Include="..\third\lua-5.2.0\src\lfunc.h" />
+    <ClInclude Include="..\third\lua-5.2.0\src\lgc.h" />
+    <ClInclude Include="..\third\lua-5.2.0\src\llex.h" />
+    <ClInclude Include="..\third\lua-5.2.0\src\llimits.h" />
+    <ClInclude Include="..\third\lua-5.2.0\src\lmem.h" />
+    <ClInclude Include="..\third\lua-5.2.0\src\lobject.h" />
+    <ClInclude Include="..\third\lua-5.2.0\src\lopcodes.h" />
+    <ClInclude Include="..\third\lua-5.2.0\src\lparser.h" />
+    <ClInclude Include="..\third\lua-5.2.0\src\lstate.h" />
+    <ClInclude Include="..\third\lua-5.2.0\src\lstring.h" />
+    <ClInclude Include="..\third\lua-5.2.0\src\ltable.h" />
+    <ClInclude Include="..\third\lua-5.2.0\src\ltm.h" />
+    <ClInclude Include="..\third\lua-5.2.0\src\lua.h" />
+    <ClInclude Include="..\third\lua-5.2.0\src\lua.hpp" />
+    <ClInclude Include="..\third\lua-5.2.0\src\luaconf.h" />
+    <ClInclude Include="..\third\lua-5.2.0\src\lualib.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\third\lua-5.2.0\src\lvm.c" />
+    <ClCompile Include="..\third\lua-5.2.0\src\lzio.c" />
+    <ClCompile Include="..\third\lua-5.2.0\src\lapi.c" />
+    <ClCompile Include="..\third\lua-5.2.0\src\lauxlib.c" />
+    <ClCompile Include="..\third\lua-5.2.0\src\lbaselib.c" />
+    <ClCompile Include="..\third\lua-5.2.0\src\lbitlib.c" />
+    <ClCompile Include="..\third\lua-5.2.0\src\lcode.c" />
+    <ClCompile Include="..\third\lua-5.2.0\src\lcorolib.c" />
+    <ClCompile Include="..\third\lua-5.2.0\src\lctype.c" />
+    <ClCompile Include="..\third\lua-5.2.0\src\ldblib.c" />
+    <ClCompile Include="..\third\lua-5.2.0\src\ldebug.c" />
+    <ClCompile Include="..\third\lua-5.2.0\src\ldo.c" />
+    <ClCompile Include="..\third\lua-5.2.0\src\ldump.c" />
+    <ClCompile Include="..\third\lua-5.2.0\src\lfunc.c" />
+    <ClCompile Include="..\third\lua-5.2.0\src\lgc.c" />
+    <ClCompile Include="..\third\lua-5.2.0\src\linit.c" />
+    <ClCompile Include="..\third\lua-5.2.0\src\liolib.c" />
+    <ClCompile Include="..\third\lua-5.2.0\src\llex.c" />
+    <ClCompile Include="..\third\lua-5.2.0\src\lmathlib.c" />
+    <ClCompile Include="..\third\lua-5.2.0\src\lmem.c" />
+    <ClCompile Include="..\third\lua-5.2.0\src\loadlib.c" />
+    <ClCompile Include="..\third\lua-5.2.0\src\lobject.c" />
+    <ClCompile Include="..\third\lua-5.2.0\src\lopcodes.c" />
+    <ClCompile Include="..\third\lua-5.2.0\src\loslib.c" />
+    <ClCompile Include="..\third\lua-5.2.0\src\lparser.c" />
+    <ClCompile Include="..\third\lua-5.2.0\src\lstate.c" />
+    <ClCompile Include="..\third\lua-5.2.0\src\lstring.c" />
+    <ClCompile Include="..\third\lua-5.2.0\src\lstrlib.c" />
+    <ClCompile Include="..\third\lua-5.2.0\src\ltable.c" />
+    <ClCompile Include="..\third\lua-5.2.0\src\ltablib.c" />
+    <ClCompile Include="..\third\lua-5.2.0\src\ltm.c" />
+    <ClCompile Include="..\third\lua-5.2.0\src\lua.c" />
+    <ClCompile Include="..\third\lua-5.2.0\src\luac.c" />
+    <ClCompile Include="..\third\lua-5.2.0\src\lundump.c" />
+  </ItemGroup>
+</Project>

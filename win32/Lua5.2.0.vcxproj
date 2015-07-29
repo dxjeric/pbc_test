@@ -1,0 +1,144 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\third\lua-5.2.0\src\lapi.h" />
+    <ClInclude Include="..\third\lua-5.2.0\src\lauxlib.h" />
+    <ClInclude Include="..\third\lua-5.2.0\src\lcode.h" />
+    <ClInclude Include="..\third\lua-5.2.0\src\lctype.h" />
+    <ClInclude Include="..\third\lua-5.2.0\src\ldebug.h" />
+    <ClInclude Include="..\third\lua-5.2.0\src\ldo.h" />
+    <ClInclude Include="..\third\lua-5.2.0\src\lfunc.h" />
+    <ClInclude Include="..\third\lua-5.2.0\src\lgc.h" />
+    <ClInclude Include="..\third\lua-5.2.0\src\llex.h" />
+    <ClInclude Include="..\third\lua-5.2.0\src\llimits.h" />
+    <ClInclude Include="..\third\lua-5.2.0\src\lmem.h" />
+    <ClInclude Include="..\third\lua-5.2.0\src\lobject.h" />
+    <ClInclude Include="..\third\lua-5.2.0\src\lopcodes.h" />
+    <ClInclude Include="..\third\lua-5.2.0\src\lparser.h" />
+    <ClInclude Include="..\third\lua-5.2.0\src\lstate.h" />
+    <ClInclude Include="..\third\lua-5.2.0\src\lstring.h" />
+    <ClInclude Include="..\third\lua-5.2.0\src\ltable.h" />
+    <ClInclude Include="..\third\lua-5.2.0\src\ltm.h" />
+    <ClInclude Include="..\third\lua-5.2.0\src\lua.h" />
+    <ClInclude Include="..\third\lua-5.2.0\src\lua.hpp" />
+    <ClInclude Include="..\third\lua-5.2.0\src\luaconf.h" />
+    <ClInclude Include="..\third\lua-5.2.0\src\lualib.h" />
+    <ClInclude Include="..\third\lua-5.2.0\src\lundump.h" />
+    <ClInclude Include="..\third\lua-5.2.0\src\lvm.h" />
+    <ClInclude Include="..\third\lua-5.2.0\src\lzio.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\third\lua-5.2.0\src\lapi.c" />
+    <ClCompile Include="..\third\lua-5.2.0\src\lauxlib.c" />
+    <ClCompile Include="..\third\lua-5.2.0\src\lbaselib.c" />
+    <ClCompile Include="..\third\lua-5.2.0\src\lbitlib.c" />
+    <ClCompile Include="..\third\lua-5.2.0\src\lcode.c" />
+    <ClCompile Include="..\third\lua-5.2.0\src\lcorolib.c" />
+    <ClCompile Include="..\third\lua-5.2.0\src\lctype.c" />
+    <ClCompile Include="..\third\lua-5.2.0\src\ldblib.c" />
+    <ClCompile Include="..\third\lua-5.2.0\src\ldebug.c" />
+    <ClCompile Include="..\third\lua-5.2.0\src\ldo.c" />
+    <ClCompile Include="..\third\lua-5.2.0\src\ldump.c" />
+    <ClCompile Include="..\third\lua-5.2.0\src\lfunc.c" />
+    <ClCompile Include="..\third\lua-5.2.0\src\lgc.c" />
+    <ClCompile Include="..\third\lua-5.2.0\src\linit.c" />
+    <ClCompile Include="..\third\lua-5.2.0\src\liolib.c" />
+    <ClCompile Include="..\third\lua-5.2.0\src\llex.c" />
+    <ClCompile Include="..\third\lua-5.2.0\src\lmathlib.c" />
+    <ClCompile Include="..\third\lua-5.2.0\src\lmem.c" />
+    <ClCompile Include="..\third\lua-5.2.0\src\loadlib.c" />
+    <ClCompile Include="..\third\lua-5.2.0\src\lobject.c" />
+    <ClCompile Include="..\third\lua-5.2.0\src\lopcodes.c" />
+    <ClCompile Include="..\third\lua-5.2.0\src\loslib.c" />
+    <ClCompile Include="..\third\lua-5.2.0\src\lparser.c" />
+    <ClCompile Include="..\third\lua-5.2.0\src\lstate.c" />
+    <ClCompile Include="..\third\lua-5.2.0\src\lstring.c" />
+    <ClCompile Include="..\third\lua-5.2.0\src\lstrlib.c" />
+    <ClCompile Include="..\third\lua-5.2.0\src\ltable.c" />
+    <ClCompile Include="..\third\lua-5.2.0\src\ltablib.c" />
+    <ClCompile Include="..\third\lua-5.2.0\src\ltm.c" />
+    <ClCompile Include="..\third\lua-5.2.0\src\lua.c" />
+    <ClCompile Include="..\third\lua-5.2.0\src\luac.c" />
+    <ClCompile Include="..\third\lua-5.2.0\src\lundump.c" />
+    <ClCompile Include="..\third\lua-5.2.0\src\lvm.c" />
+    <ClCompile Include="..\third\lua-5.2.0\src\lzio.c" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{FD52DA41-6AE0-42D3-8218-0C7A1C923209}</ProjectGuid>
+    <RootNamespace>Lua</RootNamespace>
+    <ProjectName>Lua5.2.0</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(SolutionDir)$(Configuration)\lua5.2.0</OutDir>
+    <IntDir>$(Configuration)\lua5.2.0</IntDir>
+    <TargetName>$(ProjectName)d</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)$(Configuration)\lua5.2.0</OutDir>
+    <IntDir>$(Configuration)\lua5.2.0</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <OutputFile>$(OutDir)$(TargetName)_d$(TargetExt)</OutputFile>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
