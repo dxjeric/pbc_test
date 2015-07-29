@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="src">
+      <UniqueIdentifier>{aa230bd6-7da2-4cfb-af39-52310e429716}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\third\pbc\alloc.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\third\pbc\array.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\third\pbc\bootstrap.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\third\pbc\context.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\third\pbc\descriptor.pbc.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\third\pbc\map.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\third\pbc\pattern.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\third\pbc\proto.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\third\pbc\stringpool.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\third\pbc\varint.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\third\pbc\pbc.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\third\pbc\alloc.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\third\pbc\array.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\third\pbc\bootstrap.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\third\pbc\context.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\third\pbc\decode.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\third\pbc\map.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\third\pbc\pattern.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\third\pbc\proto.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\third\pbc\register.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\third\pbc\rmessage.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\third\pbc\stringpool.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\third\pbc\varint.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\third\pbc\wmessage.c">
+      <Filter>src</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
