@@ -33,6 +33,7 @@
 *.suo
 *.user
 *.pdb
+*.ilk
 
 # Ŀ¼
 src/ipch
