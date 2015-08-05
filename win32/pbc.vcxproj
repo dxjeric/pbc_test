@@ -68,11 +68,11 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <OutDir>$(SolutionDir)$(Configuration)\pbc</OutDir>
+    <OutDir>..\lib</OutDir>
     <IntDir>$(Configuration)\pbc</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <OutDir>$(SolutionDir)$(Configuration)\pbc</OutDir>
+    <OutDir>..\lib</OutDir>
     <IntDir>$(Configuration)\pbc</IntDir>
     <TargetName>$(ProjectName)d</TargetName>
   </PropertyGroup>

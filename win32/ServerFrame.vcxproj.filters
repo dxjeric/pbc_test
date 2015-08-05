@@ -21,9 +21,24 @@
     <ClInclude Include="..\src\Common.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\LuaInterface.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\test.pb.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\Server.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\LuaInterface.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\pbc-lua.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\test.pb.cc">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

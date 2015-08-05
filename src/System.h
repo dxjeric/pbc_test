@@ -14,6 +14,7 @@
 #include <windows.h>
 #include <stdio.h>
 #include <mstcpip.h>
+#include <list>
 
 //#include <winsock.h>
 

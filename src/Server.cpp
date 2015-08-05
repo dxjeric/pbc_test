@@ -8,34 +8,21 @@
 //-------------------------------------------------------------------------------------------------
 #include "System.h"
 #include "Common.h"
+#include "LuaInterface.h"
+#include "test.pb.h"
 
 #define IOCP_ASSERT(e, info) {if(!(e)) {printf(info); printf("GetLastError [%d].\n", WSAGetLastError()); fflush(stdout); assert(false);}}
-#define OverLappedBufferLen 10240
 #define WaitingAcceptCon 2
 #define AcceptExSockAddrInLen (sizeof(SOCKADDR_IN) + 16)
 #define MustPrint(s) {printf("Must >> %s\n", s); fflush(stdout);}
 #define TestIPAddr "127.0.0.1"
 
+// TODO: 相关代码ID:201508042055
+// TODO: 为什么使用extern时, ReadMsg在server.cpp和LuaInterface.cpp中不是指向同一个对象
+//extern NetMsg ReadMsg;
+//extern NetMsg WriteMsg;
 
-typedef struct OverLapped
-{
-public:
-	typedef enum OverLappedOperatorType
-	{
-		EOLOT_Accept = 0,
-		EOLOT_Send,
-		EOLOT_Recv,
-	} OLOpType;
 
-public:
-	WSAOVERLAPPED	sysOverLapped;
-	WSABUF			sysBuffer;
-	char			dataBuffer[OverLappedBufferLen];
-	OLOpType		opType;
-
-public:
-	OverLapped();
-} OverLapped, *OverLappedPtr;
 
 inline OverLapped::OverLapped()
 {
@@ -48,7 +35,23 @@ struct ThreadInfo
 	HANDLE hIOCP;
 	//LPFN_ACCEPTEX lpfAccepEx;
 	SOCKET Conn;
+	NetMsg* ReadMsg;
+	NetMsg* WriteMsg;
 };
+
+char* GetSendMsg(char* pBuff, unsigned long& iSize)
+{
+	char pBuf[OverLappedBufferLen];
+	ZeroMemory(pBuf, OverLappedBufferLen);
+	MsgInfo pMsgInfo;
+	pMsgInfo.Clear();
+	pMsgInfo.set_time(GetTickCount());
+	pMsgInfo.set_name("new send time");
+	pMsgInfo.set_from("Server");
+	pMsgInfo.SerializeToArray(pBuff, OverLappedBufferLen);
+	iSize = pMsgInfo.ByteSize();
+	return pBuff;
+}
 
 
 DWORD ThreadProcess(LPVOID pParam)
@@ -57,15 +60,18 @@ DWORD ThreadProcess(LPVOID pParam)
 
 	HANDLE hIOCP = pThreadInfo->hIOCP;
 	SOCKET sListenConn = pThreadInfo->Conn;
+	NetMsg* pReadMsg = pThreadInfo->ReadMsg;
+	NetMsg* pWriteMsg = pThreadInfo->WriteMsg;
 	OverLapped* pOver = NULL;
 	SOCKET* pConn	  = NULL;
 	DWORD	dwBytes;
-	DWORD	dwFlag;
+	DWORD	dwFlag;	
 
 	for (;;)
 	{
-		GetQueuedCompletionStatus(hIOCP, &dwBytes, (PULONG_PTR)&pConn, (LPOVERLAPPED*)&pOver, INFINITE);
 
+		GetQueuedCompletionStatus(hIOCP, &dwBytes, (PULONG_PTR)&pConn, (LPOVERLAPPED*)&pOver, INFINITE);
+		
 		if (!pConn && !pOver)
 			return 0;
 
@@ -81,7 +87,7 @@ DWORD ThreadProcess(LPVOID pParam)
 			{
 				case OverLapped::OLOpType::EOLOT_Accept:
 				{
-					SOCKET sAcceptConn = (SOCKET)pOver->sysBuffer.len;
+					SOCKET sAcceptConn = (SOCKET)pOver->sysBuffer.len;					
 					int iLocalAddr, iRemoteAddr, iError;
 					LPSOCKADDR pLocalAddr;
 					sockaddr_in* pRemoteAddr = NULL;
@@ -134,8 +140,9 @@ DWORD ThreadProcess(LPVOID pParam)
 					OverLapped* pSendOver = new OverLapped;
 					pSendOver->opType = OverLapped::OLOpType::EOLOT_Send;
 					ZeroMemory(pSendOver->dataBuffer, OverLappedBufferLen);
-					sprintf_s(pSendOver->dataBuffer, "server new send time %d", GetTickCount());
-					pSendOver->sysBuffer.len = strlen(pSendOver->dataBuffer);					
+					GetSendMsg(pSendOver->dataBuffer, pSendOver->sysBuffer.len);
+					//sprintf_s(pSendOver->dataBuffer, "server new send time %d", GetTickCount());
+					//pSendOver->sysBuffer.len = strlen(pSendOver->dataBuffer);					
 					int nResult2 = WSASend(sAcceptConn, &pSendOver->sysBuffer, 1, &dwBytes, 0, &pSendOver->sysOverLapped, 0);
 					if (nResult2 == SOCKET_ERROR && ((iError = WSAGetLastError()) != ERROR_IO_PENDING))
 					{
@@ -155,9 +162,10 @@ DWORD ThreadProcess(LPVOID pParam)
 				
 				case OverLapped::OLOpType::EOLOT_Recv:
 				{
+					Log("EOLOT_Recv New Msg");
 					char* pData = pOver->dataBuffer;
-					printf("%s\n", pData);
 					SOCKET sAcceptConn = *pConn;
+					pReadMsg->AddNewMsg((void*)pData, (size_t)dwBytes, sAcceptConn);
 
 					// 等待接受下一组数据
 					ZeroMemory(pOver->dataBuffer, OverLappedBufferLen);
@@ -169,22 +177,20 @@ DWORD ThreadProcess(LPVOID pParam)
 						delete pOver;
 						break;
 					}
-					printf("Recv From Client [%s].\n", pOver->dataBuffer);
 
-
-					// 模拟发送测试数据
-					OverLapped* pSendOver = new OverLapped;
-					pSendOver->opType = OverLapped::OLOpType::EOLOT_Send;
-					ZeroMemory(pSendOver->dataBuffer, OverLappedBufferLen);
-					sprintf_s(pSendOver->dataBuffer, "server new send time %d", GetTickCount());
-					pSendOver->sysBuffer.len = strlen(pSendOver->dataBuffer);
-					int nResult2 = WSASend(sAcceptConn, &pSendOver->sysBuffer, 1, &dwBytes, 0, &pSendOver->sysOverLapped, 0);
-					if (nResult2 == SOCKET_ERROR && WSAGetLastError() != ERROR_IO_PENDING)
-					{
-						closesocket(sAcceptConn);
-						delete pOver;
-						break;
-					}
+					//// 模拟发送测试数据
+					//OverLapped* pSendOver = new OverLapped;
+					//pSendOver->opType = OverLapped::OLOpType::EOLOT_Send;
+					//ZeroMemory(pSendOver->dataBuffer, OverLappedBufferLen);
+					//sprintf_s(pSendOver->dataBuffer, "server new send time %d", GetTickCount());
+					//pSendOver->sysBuffer.len = strlen(pSendOver->dataBuffer);
+					//int nResult2 = WSASend(sAcceptConn, &pSendOver->sysBuffer, 1, &dwBytes, 0, &pSendOver->sysOverLapped, 0);
+					//if (nResult2 == SOCKET_ERROR && WSAGetLastError() != ERROR_IO_PENDING)
+					//{
+					//	closesocket(sAcceptConn);
+					//	delete pOver;
+					//	break;
+					//}
 				}break; // OverLapped::OLOpType::EOLOT_Recv
 			}
 		}
@@ -288,10 +294,15 @@ int main()
 		&lpfnAcceptEx, sizeof (lpfnAcceptEx),
 		&dwBytes, NULL, NULL);
 
+	NetMsg* ReadMsg = new NetMsg;
+	NetMsg* WriteMsg = new NetMsg;
+
 	// 创建工作线程, 线程关联数据
 	ThreadInfo tThreadInfo;
 	tThreadInfo.hIOCP = hIOCP;
 	tThreadInfo.Conn = sLinstenConn;
+	tThreadInfo.ReadMsg = ReadMsg;
+	tThreadInfo.WriteMsg = WriteMsg;
 	//tThreadInfo.lpfAccepEx = lpfnAcceptEx;
 	HANDLE hWorkThread = CreateThread(0, 0, (LPTHREAD_START_ROUTINE)ThreadProcess, &tThreadInfo, 0, 0);
 	IOCP_ASSERT(hWorkThread, "CreateThread Failed.\n");
@@ -307,9 +318,19 @@ int main()
 	// 添加第一批的预创建连接
 	AddWaitingAcceptConn(sLinstenConn, lpfnAcceptEx);
 
+	// 创建luainterface
+	LuaInterface luaInterface;
+	luaInterface.Init();
+	luaInterface.SetMsgBuffer(ReadMsg, WriteMsg);
+
 	while (true)
 	{
 		Flush(sLinstenConn, hAcceptExEvent, lpfnAcceptEx);
+		// TODO: 相关代码ID:201508042055
+		// LogPrint("ReadMsg[0x%08x] Size = [%d].", &ReadMsg, ReadMsg.GetSize());
+		luaInterface.Run();		
+		// 等待200ms
+		Sleep(1000);
 	}
 
 	return 1;
