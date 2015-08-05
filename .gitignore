@@ -32,6 +32,7 @@
 *.opensdf
 *.suo
 *.user
+*.pdb
 
 # Ŀ¼
 src/ipch
