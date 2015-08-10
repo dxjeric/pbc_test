@@ -283,6 +283,7 @@ const luaL_Reg NetWork[] = {
 
 static int RegisterLuaNetworkFuns(lua_State* L)
 {
+	luaL_checkversion(L);
 	luaL_newlib(L, NetWork);
 	return 1;
 }
