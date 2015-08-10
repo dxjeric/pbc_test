@@ -38,6 +38,7 @@ function main_enter(msg, len, conn)
 	print(msg)
 	print("------------------------------")
 	local decode_msg = protobuf.decode("tutorial.MsgInfo", msg, len);
+	-- local decode_msg = protobuf.decode("tutorial.MsgInfo", msg); -- endoce string
 	for k, v in pairs(decode_msg) do
 		print(k, v)
 	end
@@ -51,6 +52,8 @@ function main_enter(msg, len, conn)
 	}
 	
 	protobuf.encode("tutorial.MsgInfo", new_msg, msg_encode_bak, conn)
+--	local send_msg = protobuf.encode("tutorial.MsgInfo", new_msg); 	-- decode string
+	Network.sendmsg(send_msg, 0, conn)
 	return 1
 end
 

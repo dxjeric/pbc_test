@@ -10,6 +10,8 @@
 #include "System.h"
 #include "Common.h"
 
+// #define PBC_ENCODE_USE_STRING
+
 // error LNK2001: 无法解析的外部符号 "int __cdecl luaopen_protobuf_c(struct lua_State *)" (?luaopen_protobuf_c@@YAHPAUlua_State@@@Z)
 // TODO: 猜测的原因是，C++如果要引用C的函数时，需要添加extern C
 #ifdef __cplusplus
@@ -181,7 +183,11 @@ int LuaInterface::Run()
 
 	// 第一个参数
 	// lua_pushstring(m_pLuaState, (char*)pMsg);
+#ifdef PBC_ENCODE_USE_STRING
+	lua_pushstring(m_pLuaState, (char*)pMsg);
+#else
 	lua_pushlightuserdata(m_pLuaState, pMsg);
+#endif // PBC_ENCODE_USE_STRING
 
 	// 第二个参数
 	lua_pushnumber(m_pLuaState, iLen);
@@ -247,8 +253,13 @@ int LuaInterface::CallErrorHandle(int errcode)
 
 int LuaInterface::SendMsg(lua_State* L)
 {
+#ifdef PBC_ENCODE_USE_STRING
+	size_t	iLen = 0;
+	void* pMsg = (void*) luaL_checklstring(L, 1, &iLen);
+#else
 	void*	pMsg = (void *)lua_touserdata(L, 1);
 	size_t	iLen = (size_t)lua_tonumber(L, 2);
+#endif // PBC_ENCODE_USE_STRING	
 	SOCKET*	Conn = (SOCKET*)lua_touserdata(L, 3);
 
 	int iError;
