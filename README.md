@@ -12,5 +12,12 @@
   [addressbook.pb](https://github.com/cloudwu/pbc/tree/master/test): 云风pbc中的测试例子
   [test.pb](https://github.com/Eric-Dang/ProtocolBuffer/tree/master/proto): 自己根据做gpb时定义的消息
 
+# 项目使用
+  1. pbc.lib：		使用云风pbc生成的lib文件
+  2. pbc-lua.c：	项目需要文件，生成lua调用的函数
+  3. protobuf.lua： 云风已经封装好的lua接口，将代码中require "probotbuf.c" 修改为你注册的pbc的lib name
+  4. protoc.exe：	使用[google protocol buffer](https://developers.google.com/protocol-buffers/)生成的运行程序，用于生成.pb文件
+  5. 和gpb组合使用：简单测试，建议使用非string的encode和decode接口，非string的区别在C接口中如何获取消息
+
 # 备注
   项目还需要google protocol buffer(2版本)相应的几个lib，可以自己编译生成，或者[下载](https://github.com/Eric-Dang/ProtocolBuffer/tree/master/lib)。
