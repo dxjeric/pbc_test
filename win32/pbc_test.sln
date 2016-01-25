@@ -8,6 +8,10 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "pbc", "pbc.vcxproj", "{189A9B56-C586-4DC2-BB63-2E1E5D054B3B}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ServerFrame", "ServerFrame.vcxproj", "{46EDBF16-7E7C-4281-B827-F02565EAD8F7}"
+	ProjectSection(ProjectDependencies) = postProject
+		{FD52DA41-6AE0-42D3-8218-0C7A1C923209} = {FD52DA41-6AE0-42D3-8218-0C7A1C923209}
+		{189A9B56-C586-4DC2-BB63-2E1E5D054B3B} = {189A9B56-C586-4DC2-BB63-2E1E5D054B3B}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
