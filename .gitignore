@@ -44,3 +44,7 @@ Release
 
 # vi/vim .swp file
 *.swp
+
+# protocol buffer data
+*.pb
+common.proto
