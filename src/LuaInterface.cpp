@@ -288,6 +288,40 @@ void LuaInterface::SetMsgBuffer(NetMsg* pRead, NetMsg* pWrite)
 	m_pWrite = pWrite;
 }
 
+int LuaInterface::createTable(lua_State* L)
+{
+	lua_newtable(L);
+
+	int npos = lua_objlen(L, -1);
+	// lua_pushstring(L, "12345");
+	lua_pushnumber(L, 1);
+	lua_pushstring(L, "abc");
+	lua_settable(L, -3);
+	npos = lua_objlen(L, -1);
+	// lua_pushstring(L, "abc");
+	lua_pushnumber(L, 2);
+	lua_pushstring(L, "asdasdfsf");
+	lua_settable(L, -3);
+
+	lua_pushstring(L, NULL);
+	lua_pushstring(L, "asdasdfsf");
+	lua_settable(L, -3);
+
+	return 1;
+}
+
+const luaL_Reg InterfaceTest[] = {
+	{"createTable", LuaInterface::createTable},
+};
+
+
+static int RegisterLuaInterfaceTestFuns(lua_State* L)
+{
+	luaL_checkversion(L);
+	luaL_newlib(L, InterfaceTest);
+	return 1;
+}
+
 const luaL_Reg NetWork[] = {
 	{"sendmsg", LuaInterface::SendMsg},
 };
@@ -300,8 +334,9 @@ static int RegisterLuaNetworkFuns(lua_State* L)
 }
 
 static const luaL_Reg RegisterLuaLibs[] = {
-	{"Network", RegisterLuaNetworkFuns},
-	{"pbc", luaopen_protobuf_c},
+	{ "Network",		RegisterLuaNetworkFuns },
+	{ "pbc",			luaopen_protobuf_c },
+	{ "InterfaceTest",	RegisterLuaInterfaceTestFuns },
 	{NULL, NULL},
 };
 

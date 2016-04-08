@@ -61,7 +61,7 @@ function main_error(msg)
 	print("lua print: " .. msg)
 	return 1
 end
-
+--[[
 function yunfengtest()
 	addr = io.open("./addressbook.pb","rb")
 	buffer = addr:read "*a"
@@ -101,7 +101,25 @@ function yunfengtest()
 	print(decode.id)
 
 end
+--]]
 
-print("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
-yunfengtest()
+function printTable(name, t, tab)
+	if type(t) ~= "table" then
+		print(name .. " = " .. tostring(t))
+		return
+	end
+
+	print(tab .. name .. " = " .. tostring(t) .. " {")
+	for k, v in pairs(t) do
+		if type(v) == "table" then
+			printTable(k, v, tab .. "\t")
+		else
+			print(tab .. "\t" .. k .. " = " .. tostring(v))
+		end
+	end
+	print(tab .. "}")
+end
+
+printTable("createTable", InterfaceTest.createTable(), "")
+
 

@@ -246,77 +246,77 @@ void Flush(SOCKET sListenConn, HANDLE hAcceptExEvent, LPFN_ACCEPTEX lpfnAcceptEx
 
 int main()
 {
-	WSADATA wsData;
-	IOCP_ASSERT(WSAStartup(MAKEWORD(2, 2), &wsData) == 0, "WSAStartup Failed.\n");
+	//WSADATA wsData;
+	//IOCP_ASSERT(WSAStartup(MAKEWORD(2, 2), &wsData) == 0, "WSAStartup Failed.\n");
 
-	HANDLE hIOCP = CreateIoCompletionPort(INVALID_HANDLE_VALUE, NULL, NULL, 2);
-	IOCP_ASSERT(hIOCP != NULL, "CreateIoCompletionPort Failed.\n");
+	//HANDLE hIOCP = CreateIoCompletionPort(INVALID_HANDLE_VALUE, NULL, NULL, 2);
+	//IOCP_ASSERT(hIOCP != NULL, "CreateIoCompletionPort Failed.\n");
 
-	SOCKET sLinstenConn = WSASocket(AF_INET, SOCK_STREAM, IPPROTO_IP, 0, 0, WSA_FLAG_OVERLAPPED);
-	IOCP_ASSERT(sLinstenConn != INVALID_SOCKET, "WSASocket Failed.\n");
-	MustPrint("Socket Create Ok.\n");
+	//SOCKET sLinstenConn = WSASocket(AF_INET, SOCK_STREAM, IPPROTO_IP, 0, 0, WSA_FLAG_OVERLAPPED);
+	//IOCP_ASSERT(sLinstenConn != INVALID_SOCKET, "WSASocket Failed.\n");
+	//MustPrint("Socket Create Ok.\n");
 
-	//int nReuseAddr = 1;
-	//setsockopt(Conn, SOL_SOCKET, SO_REUSEADDR, (const char*)&nReuseAddr, sizeof(int));
+	////int nReuseAddr = 1;
+	////setsockopt(Conn, SOL_SOCKET, SO_REUSEADDR, (const char*)&nReuseAddr, sizeof(int));
 
-	SOCKADDR_IN addr;
-	addr.sin_family = AF_INET;
-	addr.sin_port = htons(6666);
-	addr.sin_addr.s_addr = inet_addr(TestIPAddr); // inet_addr("127.0.0.1"); // htonl(INADDR_ANY);
+	//SOCKADDR_IN addr;
+	//addr.sin_family = AF_INET;
+	//addr.sin_port = htons(6666);
+	//addr.sin_addr.s_addr = inet_addr(TestIPAddr); // inet_addr("127.0.0.1"); // htonl(INADDR_ANY);
 
-	if (bind(sLinstenConn, (PSOCKADDR)&addr, sizeof(addr)) == SOCKET_ERROR)
-		IOCP_ASSERT(false, "bind Failed.\n");
-	
-	// 参数2：	The maximum length of the queue of pending connections.  
-	//			If set to SOMAXCONN, the underlying service provider responsible for socket s will set the backlog to a maximum reasonable value. 
-	//			There is no standard provision to obtain the actual backlog value
-	//			等待队列的最大长度。
-	if (listen(sLinstenConn, SOMAXCONN) == SOCKET_ERROR)
-		IOCP_ASSERT(false, "listen Failed.\n");
+	//if (bind(sLinstenConn, (PSOCKADDR)&addr, sizeof(addr)) == SOCKET_ERROR)
+	//	IOCP_ASSERT(false, "bind Failed.\n");
+	//
+	//// 参数2：	The maximum length of the queue of pending connections.  
+	////			If set to SOMAXCONN, the underlying service provider responsible for socket s will set the backlog to a maximum reasonable value. 
+	////			There is no standard provision to obtain the actual backlog value
+	////			等待队列的最大长度。
+	//if (listen(sLinstenConn, SOMAXCONN) == SOCKET_ERROR)
+	//	IOCP_ASSERT(false, "listen Failed.\n");
 
-	MustPrint("Listen OK.\n");
+	//MustPrint("Listen OK.\n");
 
-	// 关联监听连接和完成端口
-	if (!CreateIoCompletionPort((HANDLE)sLinstenConn, hIOCP, (DWORD_PTR)&sLinstenConn, 0))
-		IOCP_ASSERT(false, "CreateIoCompletionPort Associate IOCP with Conn Failed.\n");
+	//// 关联监听连接和完成端口
+	//if (!CreateIoCompletionPort((HANDLE)sLinstenConn, hIOCP, (DWORD_PTR)&sLinstenConn, 0))
+	//	IOCP_ASSERT(false, "CreateIoCompletionPort Associate IOCP with Conn Failed.\n");
 
-	MustPrint("Create IOCP OK.\n");
+	//MustPrint("Create IOCP OK.\n");
 
-	// Load the AcceptEx function into memory using WSAIoctl. The WSAIoctl function is an extension of the ioctlsocket()
-	// function that can use overlapped I/O. The function's 3rd through 6th parameters are input and output buffers where
-	// we pass the pointer to our AcceptEx function. This is used so that we can call the AcceptEx function directly, rather
-	// than refer to the Mswsock.lib library.
-	GUID GuidAcceptEx = WSAID_ACCEPTEX;	 // WSAID_GETACCEPTEXSOCKADDRS	
-	LPFN_ACCEPTEX lpfnAcceptEx = NULL;
-	DWORD dwBytes;
-	int iResult = WSAIoctl(sLinstenConn, SIO_GET_EXTENSION_FUNCTION_POINTER,
-		&GuidAcceptEx, sizeof (GuidAcceptEx),
-		&lpfnAcceptEx, sizeof (lpfnAcceptEx),
-		&dwBytes, NULL, NULL);
+	//// Load the AcceptEx function into memory using WSAIoctl. The WSAIoctl function is an extension of the ioctlsocket()
+	//// function that can use overlapped I/O. The function's 3rd through 6th parameters are input and output buffers where
+	//// we pass the pointer to our AcceptEx function. This is used so that we can call the AcceptEx function directly, rather
+	//// than refer to the Mswsock.lib library.
+	//GUID GuidAcceptEx = WSAID_ACCEPTEX;	 // WSAID_GETACCEPTEXSOCKADDRS	
+	//LPFN_ACCEPTEX lpfnAcceptEx = NULL;
+	//DWORD dwBytes;
+	//int iResult = WSAIoctl(sLinstenConn, SIO_GET_EXTENSION_FUNCTION_POINTER,
+	//	&GuidAcceptEx, sizeof (GuidAcceptEx),
+	//	&lpfnAcceptEx, sizeof (lpfnAcceptEx),
+	//	&dwBytes, NULL, NULL);
 
 	NetMsg* ReadMsg = new NetMsg;
 	NetMsg* WriteMsg = new NetMsg;
 
-	// 创建工作线程, 线程关联数据
-	ThreadInfo tThreadInfo;
-	tThreadInfo.hIOCP = hIOCP;
-	tThreadInfo.Conn = sLinstenConn;
-	tThreadInfo.ReadMsg = ReadMsg;
-	tThreadInfo.WriteMsg = WriteMsg;
-	//tThreadInfo.lpfAccepEx = lpfnAcceptEx;
-	HANDLE hWorkThread = CreateThread(0, 0, (LPTHREAD_START_ROUTINE)ThreadProcess, &tThreadInfo, 0, 0);
-	IOCP_ASSERT(hWorkThread, "CreateThread Failed.\n");
-	MustPrint("CreateThread OK.\n");
+	//// 创建工作线程, 线程关联数据
+	//ThreadInfo tThreadInfo;
+	//tThreadInfo.hIOCP = hIOCP;
+	//tThreadInfo.Conn = sLinstenConn;
+	//tThreadInfo.ReadMsg = ReadMsg;
+	//tThreadInfo.WriteMsg = WriteMsg;
+	////tThreadInfo.lpfAccepEx = lpfnAcceptEx;
+	//HANDLE hWorkThread = CreateThread(0, 0, (LPTHREAD_START_ROUTINE)ThreadProcess, &tThreadInfo, 0, 0);
+	//IOCP_ASSERT(hWorkThread, "CreateThread Failed.\n");
+	//MustPrint("CreateThread OK.\n");
 
-	// 创建事件，在AcceptEx中的预分配的连接使用完时，再次创建
-	HANDLE hAcceptExEvent = CreateEvent(0, false, false, 0);
-	IOCP_ASSERT(hAcceptExEvent, "CreateEvent Failed.\n");
-	iResult = WSAEventSelect(sLinstenConn, hAcceptExEvent, FD_ACCEPT);
-	IOCP_ASSERT(iResult != SOCKET_ERROR, "WSAEventSelect Failed.\n");
-	MustPrint("Event Select OK.\n");
+	//// 创建事件，在AcceptEx中的预分配的连接使用完时，再次创建
+	//HANDLE hAcceptExEvent = CreateEvent(0, false, false, 0);
+	//IOCP_ASSERT(hAcceptExEvent, "CreateEvent Failed.\n");
+	//iResult = WSAEventSelect(sLinstenConn, hAcceptExEvent, FD_ACCEPT);
+	//IOCP_ASSERT(iResult != SOCKET_ERROR, "WSAEventSelect Failed.\n");
+	//MustPrint("Event Select OK.\n");
 
-	// 添加第一批的预创建连接
-	AddWaitingAcceptConn(sLinstenConn, lpfnAcceptEx);
+	//// 添加第一批的预创建连接
+	//AddWaitingAcceptConn(sLinstenConn, lpfnAcceptEx);
 
 	// 创建luainterface
 	LuaInterface luaInterface;
@@ -325,7 +325,7 @@ int main()
 
 	while (true)
 	{
-		Flush(sLinstenConn, hAcceptExEvent, lpfnAcceptEx);
+		// Flush(sLinstenConn, hAcceptExEvent, lpfnAcceptEx);
 		// TODO: 相关代码ID:201508042055
 		// LogPrint("ReadMsg[0x%08x] Size = [%d].", &ReadMsg, ReadMsg.GetSize());
 		luaInterface.Run();		

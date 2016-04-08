@@ -43,12 +43,14 @@ public:
 	int Run();
 
 	// lua接口 发送消息
-	static int SendMsg(lua_State* L);
+	static int	SendMsg(lua_State* L);
+	static int	createTable(lua_State* L);
 
 	// 临时代码 不想去再做设计
 	void SetMsgBuffer(NetMsg* pRead, NetMsg* pWrite);
 private:
 	static int	traceback(lua_State* L);
+
 	int			CallErrorHandle(int errcode);
 	// 加载所有需要的lua lib
 	void		LoadAllLuaLibs();
