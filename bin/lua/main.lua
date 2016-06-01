@@ -120,6 +120,6 @@ function printTable(name, t, tab)
 	print(tab .. "}")
 end
 
-printTable("createTable", InterfaceTest.createTable(), "")
+printTable("createTable", InterfaceTest.createTable({x = 1, y = 2}), "")
 
 

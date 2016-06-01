@@ -290,8 +290,15 @@ void LuaInterface::SetMsgBuffer(NetMsg* pRead, NetMsg* pWrite)
 
 int LuaInterface::createTable(lua_State* L)
 {
-	lua_newtable(L);
+	lua_getfield(L, 1, "x");
+	int a = (int)lua_tonumber(L, -1);
+	lua_pop(L, 1);
 
+	lua_getfield(L, 1, "y");
+	a = (int)lua_tonumber(L, -1);
+	lua_pop(L, 1);
+
+	lua_newtable(L);
 	int npos = lua_objlen(L, -1);
 	// lua_pushstring(L, "12345");
 	lua_pushnumber(L, 1);
@@ -303,9 +310,20 @@ int LuaInterface::createTable(lua_State* L)
 	lua_pushstring(L, "asdasdfsf");
 	lua_settable(L, -3);
 
-	lua_pushstring(L, NULL);
-	lua_pushstring(L, "asdasdfsf");
+	lua_pushstring(L, "tt");
+	lua_newtable(L);
+	lua_pushstring(L, "a");
+	lua_pushstring(L, "b");
 	lua_settable(L, -3);
+	lua_settable(L, -3);
+
+	lua_pushstring(L, "tt2");
+	lua_newtable(L);
+	lua_pushstring(L, "a");
+	lua_pushstring(L, "b");
+	lua_settable(L, -3);
+	lua_settable(L, -3);
+
 
 	return 1;
 }
