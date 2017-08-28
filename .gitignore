@@ -34,8 +34,10 @@
 *.user
 *.pdb
 *.ilk
+*.iobj
+*.ipdb
 
-# Ŀ¼
+# exe
 src/ipch
 exe/
 obj/
