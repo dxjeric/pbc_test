@@ -899,8 +899,10 @@ new_array(lua_State *L, int id, const char *key) {
 	}
 }
 
+static void decode_cb(struct pbc_env * env, void *ud, int type, const char * type_name, union pbc_value *v, int id, const char *key, int isChildMsg);
+
 static void
-push_value(lua_State *L, int type, const char * type_name, union pbc_value *v) {
+push_value(struct pbc_env * env, lua_State *L, int type, const char * type_name, union pbc_value *v) {
 	switch(type) {
 	case PBC_INT:
 		lua_pushinteger(L, (int)v->i.low);
@@ -919,10 +921,8 @@ push_value(lua_State *L, int type, const char * type_name, union pbc_value *v) {
 		lua_pushlstring(L, (const char *)v->s.buffer , v->s.len);
 		break;
 	case PBC_MESSAGE:
-		lua_pushvalue(L, -3);
-		lua_pushstring(L, type_name);
-		lua_pushlstring(L, (const char *)v->s.buffer , v->s.len);
-		lua_call(L, 2 , 1);
+		lua_newtable(L);
+		pbc_decode(env, type_name, &(v->s), decode_cb, L, 1);
 		break;
 	case PBC_FIXED64:
 		lua_pushlstring(L, (const char *)&(v->i), 8);
@@ -952,22 +952,25 @@ push_value(lua_State *L, int type, const char * type_name, union pbc_value *v) {
 	-1:	table id
  */
 static void
-decode_cb(void *ud, int type, const char * type_name, union pbc_value *v, int id, const char *key) {
+decode_cb(struct pbc_env * env, void *ud, int type, const char * type_name, union pbc_value *v, int id, const char *key, int isChildMsg) {
 	lua_State *L = (lua_State *)ud;
 	if (key == NULL) {
 		// undefined field
 		return;
 	}
 	if (type & PBC_REPEATED) {
-		push_value(L, type & ~PBC_REPEATED, type_name, v);
+		push_value(env, L, type & ~PBC_REPEATED, type_name, v);
 		new_array(L, id , key);	// func.decode table.key table.id value array
 		int n = lua_rawlen(L,-1);
 		lua_insert(L, -2);	// func.decode table.key table.id array value
 		lua_rawseti(L, -2 , n+1);	// func.decode table.key table.id array
 		lua_pop(L,1);
 	} else {
-		push_value(L, type, type_name, v);
-		lua_setfield(L, -3 , key);
+		push_value(env, L, type, type_name, v);
+		if (isChildMsg == 0)
+			lua_setfield(L, -3, key);
+		else
+			lua_setfield(L, -2 , key);
 	}
 }
 
@@ -988,6 +991,7 @@ _decode(lua_State *L) {
 	luaL_checktype(L, 2 , LUA_TFUNCTION);
 	luaL_checktype(L, 3 , LUA_TTABLE);
 	const char * type = luaL_checkstring(L,4);
+
 	struct pbc_slice slice;
 	if (lua_type(L,5) == LUA_TSTRING) {
 		size_t len;
@@ -1001,7 +1005,7 @@ _decode(lua_State *L) {
 	lua_pushvalue(L, 3);
 	lua_newtable(L);
 
-	int n = pbc_decode(env, type, &slice, decode_cb, L);
+	int n = pbc_decode(env, type, &slice, decode_cb, L, 0);
 	if (n<0) {
 		lua_pushboolean(L,0);
 	} else {

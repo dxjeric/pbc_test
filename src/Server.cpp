@@ -9,7 +9,7 @@
 #include "System.h"
 #include "Common.h"
 #include "LuaInterface.h"
-#include "test.pb.h"
+//#include "test.pb.h"
 
 #define IOCP_ASSERT(e, info) {if(!(e)) {printf(info); printf("GetLastError [%d].\n", WSAGetLastError()); fflush(stdout); assert(false);}}
 #define WaitingAcceptCon 2
@@ -43,13 +43,13 @@ char* GetSendMsg(char* pBuff, unsigned long& iSize)
 {
 	char pBuf[OverLappedBufferLen];
 	ZeroMemory(pBuf, OverLappedBufferLen);
-	MsgInfo pMsgInfo;
-	pMsgInfo.Clear();
-	pMsgInfo.set_time(GetTickCount());
-	pMsgInfo.set_name("new send time");
-	pMsgInfo.set_from("Server");
-	pMsgInfo.SerializeToArray(pBuff, OverLappedBufferLen);
-	iSize = pMsgInfo.ByteSize();
+	//MsgInfo pMsgInfo;
+	//pMsgInfo.Clear();
+	//pMsgInfo.set_time(GetTickCount());
+	//pMsgInfo.set_name("new send time");
+	//pMsgInfo.set_from("Server");
+	//pMsgInfo.SerializeToArray(pBuff, OverLappedBufferLen);
+	//iSize = pMsgInfo.ByteSize();
 	return pBuff;
 }
 

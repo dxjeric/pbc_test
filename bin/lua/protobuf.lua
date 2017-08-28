@@ -364,6 +364,7 @@ local _encode_type_meta = {}
 
 function _encode_type_meta:__index(key)
 	local t, msg = c._env_type(P, self._CType, key)
+	print(key)
 	local func = assert(_writer[t],key)(msg)
 	self[key] = func
 	return func

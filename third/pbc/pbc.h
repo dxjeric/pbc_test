@@ -57,8 +57,8 @@ union pbc_value {
 	} e;
 };
 
-typedef void (*pbc_decoder)(void *ud, int type, const char * type_name, union pbc_value *v, int id, const char *key);
-int pbc_decode(struct pbc_env * env, const char * type_name , struct pbc_slice * slice, pbc_decoder f, void *ud);
+typedef void (*pbc_decoder)(struct pbc_env * env, void *ud, int type, const char * type_name, union pbc_value *v, int id, const char *key, int isChildMsg);
+int pbc_decode(struct pbc_env * env, const char * type_name , struct pbc_slice * slice, pbc_decoder f, void *ud, int isChildMsg);
 
 // message api
 
