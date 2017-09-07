@@ -24,7 +24,7 @@ message Person {
   message Child
   {
     required string number = 1;
-    required PhoneNumber phone = 2;
+    repeated PhoneNumber phone = 2;
   }
 
   repeated PhoneNumber phone = 4;

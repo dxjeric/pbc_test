@@ -116,15 +116,15 @@ function yunfengtest()
 		ChildTest = {
 			{
 				number = 'num 1',
-				phone = { number = "87654321", type = "WORK" },
+				phone = {{ number = "87654321", type = "WORK" }},
 			},
 			{
 				number = 'num 2',
-				phone = { number = "asfas", type = "WORK" },
+				phone = {{ number = "asfas", type = "WORK" }, { number = "asfas12", type = "WORK" }},
 			},
 			{
 				number = 'num 3',
-				phone = { number = "saaass"},
+				phone = {{ number = "saaass"}},
 			},
 		}
 	}
