@@ -898,7 +898,7 @@ new_array(lua_State *L, int id, const char *key) {
 	}
 }
 
-static void decode_cb(struct pbc_env * env, void *ud, int type, const char * type_name, union pbc_value *v, int id, const char *key, int isChildMsg);
+static void decode_cb(struct pbc_env * env, void *ud, int type, const char * type_name, union pbc_value *v, int id, const char *key);
 
 static void
 push_value(struct pbc_env * env, lua_State *L, int type, const char * type_name, union pbc_value *v) {
@@ -951,7 +951,7 @@ push_value(struct pbc_env * env, lua_State *L, int type, const char * type_name,
 	//-1:	table id
  */
 static void
-decode_cb(struct pbc_env * env, void *ud, int type, const char * type_name, union pbc_value *v, int id, const char *key, int isChildMsg) {
+decode_cb(struct pbc_env * env, void *ud, int type, const char * type_name, union pbc_value *v, int id, const char *key) {
 	lua_State *L = (lua_State *)ud;
 	if (key == NULL) {
 		// undefined field
