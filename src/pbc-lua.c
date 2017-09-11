@@ -921,7 +921,7 @@ push_value(struct pbc_env * env, lua_State *L, int type, const char * type_name,
 		break;
 	case PBC_MESSAGE:
 		lua_newtable(L);
-		pbc_decode(env, type_name, &(v->s), decode_cb, L, 1);
+		pbc_decode(env, type_name, &(v->s), decode_cb, L);
 		break;
 	case PBC_FIXED64:
 		lua_pushlstring(L, (const char *)&(v->i), 8);
@@ -999,9 +999,9 @@ _decode(lua_State *L) {
 	}
 	lua_pushvalue(L, 2);
 	lua_pushvalue(L, 3);
-	//lua_newtable(L);
+	//lua_newtable(L); 为什么需要table id 这个表？ 还没看明白
 
-	int n = pbc_decode(env, type, &slice, decode_cb, L, 0);
+	int n = pbc_decode(env, type, &slice, decode_cb, L);
 	if (n<0) {
 		lua_pushboolean(L,0);
 	} else {
