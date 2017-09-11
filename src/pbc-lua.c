@@ -882,20 +882,19 @@ _pattern_size(lua_State *L) {
 }
 
 /*
-	-3 table key
-	-2 table id
+	-2 table key
 	-1 value
  */
 static void
 new_array(lua_State *L, int id, const char *key) {
-	lua_rawgeti(L, -2 , id);
+	lua_getfield(L, -2 , key);
 	if (lua_isnil(L, -1)) {
 		lua_pop(L,1);
-		lua_newtable(L);  // table.key table.id value array
+		lua_newtable(L);  // table.key value array
 		lua_pushvalue(L,-1);
-		lua_pushvalue(L,-1); // table.key table.id value array array array
-		lua_setfield(L, -6 , key);
-		lua_rawseti(L, -4, id);
+		//lua_pushvalue(L,-1); // table.key value array array
+		lua_setfield(L, -4 , key);
+		//lua_rawseti(L, -4, id);
 	}
 }
 
@@ -947,9 +946,9 @@ push_value(struct pbc_env * env, lua_State *L, int type, const char * type_name,
 }
 
 /*
-	-3: function decode
-	-2: table key
-	-1:	table id
+	-2: function decode
+	-1: table key
+	//-1:	table id
  */
 static void
 decode_cb(struct pbc_env * env, void *ud, int type, const char * type_name, union pbc_value *v, int id, const char *key, int isChildMsg) {
@@ -960,17 +959,14 @@ decode_cb(struct pbc_env * env, void *ud, int type, const char * type_name, unio
 	}
 	if (type & PBC_REPEATED) {
 		push_value(env, L, type & ~PBC_REPEATED, type_name, v);
-		new_array(L, id , key);	// func.decode table.key table.id value array
+		new_array(L, id , key);	// func.decode table.key value array
 		int n = lua_rawlen(L,-1);
-		lua_insert(L, -2);	// func.decode table.key table.id array value
-		lua_rawseti(L, -2 , n+1);	// func.decode table.key table.id array
+		lua_insert(L, -2);	// func.decode table.key array value
+		lua_rawseti(L, -2 , n+1);	// func.decode table.key array
 		lua_pop(L,1);
 	} else {
 		push_value(env, L, type, type_name, v);
-		if (isChildMsg == 0)
-			lua_setfield(L, -3, key);
-		else
-			lua_setfield(L, -2 , key);
+		lua_setfield(L, -2, key);
 	}
 }
 
@@ -1003,7 +999,7 @@ _decode(lua_State *L) {
 	}
 	lua_pushvalue(L, 2);
 	lua_pushvalue(L, 3);
-	lua_newtable(L);
+	//lua_newtable(L);
 
 	int n = pbc_decode(env, type, &slice, decode_cb, L, 0);
 	if (n<0) {

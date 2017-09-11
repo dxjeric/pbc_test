@@ -39,7 +39,7 @@ function printTable(name, t, tab)
 		return
 	end
 
-	print(tab .. name .. " = " .. tostring(t) .. " {")
+	print(tab .. tostring(name) .. " = " .. tostring(t) .. " {")
 	for k, v in pairs(t) do
 		if type(v) == "table" then
 			printTable(k, v, tab .. "\t")
@@ -112,15 +112,15 @@ function yunfengtest()
 		},
 		test = {1},
 		onePhone = {number = "87654321", type = "WORK"},
-		intTest	= {1, 2,3,3, 4,4, 5,},
+		intTest	= {1, 2, 3, 3, 4, 4, 5,},
 		ChildTest = {
 			{
 				number = 'num 1',
-				phone = {{ number = "87654321", type = "WORK" }},
+				phone = {{ number = "87654321", type = "WORK" , testtt = {{a = 1}, {a =2}}}},
 			},
 			{
 				number = 'num 2',
-				phone = {{ number = "asfas", type = "WORK" }, { number = "asfas12", type = "WORK" }},
+				phone = {{ number = "asfas", type = "WORK" }, { number = "asfas12", type = "WORK", testtt = {{a = 1}, {a =2}}}},
 			},
 			{
 				number = 'num 3',
@@ -132,17 +132,7 @@ function yunfengtest()
 	code = protobuf.encode("tutorial.Person", addressbook)
 	decode = protobuf.decode("tutorial.Person" , code)
     printTable("decode", decode, "")
-
-	print(decode.name)
-	print(decode.id)
-
 end
 
 yunfengtest()
-
-
-
-
 --printTable("createTable", InterfaceTest.createTable({x = 1, y = 2}), "")
-
-
